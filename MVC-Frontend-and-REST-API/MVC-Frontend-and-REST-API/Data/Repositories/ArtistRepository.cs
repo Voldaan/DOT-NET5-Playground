@@ -17,25 +17,24 @@ namespace MVC_Frontend_and_REST_API.Data.Repositories
             _crudRepository = new CrudRepository<Artist>(_context);
         }
 
-        public void Create(Artist model)
+        public bool Create(Artist model)
         {
-            _crudRepository.Create(model);
+            return _crudRepository.Create(model);
         }
 
         public List<Artist> Read()
         {
-            //return _crudRepository.Read().Where(x => x.WorldId == InformationStorage.worldId).OrderBy(character => character.Surname).ToList();
             return _crudRepository.Read().OrderBy(x => x.Name).ToList();
         }
 
-        public void Update(Artist model)
+        public bool Update(Artist model)
         {
-            _crudRepository.Update(model);
+            return _crudRepository.Update(model);
         }
 
-        public void Delete(Guid id)
+        public bool Delete(Guid id)
         {
-            _crudRepository.Delete(_crudRepository.Read().Where(x => x.Id == id).FirstOrDefault());
+            return _crudRepository.Delete(_crudRepository.Read().Where(x => x.Id == id).FirstOrDefault());
         }
 
     }

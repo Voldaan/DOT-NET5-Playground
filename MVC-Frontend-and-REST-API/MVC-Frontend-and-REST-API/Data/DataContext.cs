@@ -12,6 +12,6 @@ namespace MVC_Frontend_and_REST_API.Data
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
 
-        public DbSet<Artist> Worlds { get; set; }
+        public DbSet<Artist> Artists { get; set; }
     }
 }

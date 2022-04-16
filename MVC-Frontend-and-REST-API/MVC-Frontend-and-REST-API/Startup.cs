@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.OpenApi.Models;
+using MVC_Frontend_and_REST_API.Logic;
 
 namespace MVC_Frontend_and_REST_API
 {
@@ -27,6 +28,8 @@ namespace MVC_Frontend_and_REST_API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<ArtistLogic>();
+
             services.AddControllersWithViews();
 
             services.AddDbContext<DataContext>(options =>

@@ -10,6 +10,11 @@ namespace MVC_Frontend_and_REST_API.Models.DataModels
     {
         [Key]
         public Guid Id { get; set; }
+        [Required]
+        [MaxLength(50, ErrorMessage = "A maximum of {1} characters allowed")]      //This is called DataAnnotations
         public string Name { get; set; }
+        [Required]
+        [MaxLength(500, ErrorMessage = "A maximum of {1} characters allowed")]
+        public string Description { get; set; }
     }
 }

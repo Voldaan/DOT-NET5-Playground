@@ -19,10 +19,9 @@ namespace MVC_Frontend_and_REST_API.Logic
             _artistRepository = new ArtistRepository(_context);
         }
 
-        public void Create(Artist model)
+        public bool Create(Artist model)
         {
-            _artistRepository.Create(model);
-            return;
+            return _artistRepository.Create(model);
         }
 
         public List<Artist> Read()
@@ -30,16 +29,14 @@ namespace MVC_Frontend_and_REST_API.Logic
             return _artistRepository.Read();
         }
 
-        public void Update(Artist model)
+        public bool Update(Artist model)
         {
-            _artistRepository.Update(model);
-            return;
+            return _artistRepository.Update(model);
         }
 
-        public void Delete(Guid id)
+        public bool Delete(Guid id)
         {
-            _artistRepository.Delete(id);
-            return;
+            return _artistRepository.Delete(id);
         }
     }
 }

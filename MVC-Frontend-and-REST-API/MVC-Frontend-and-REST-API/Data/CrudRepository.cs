@@ -14,10 +14,11 @@ namespace MVC_Frontend_and_REST_API.Data
             _dbContext = dbContext;
         }
 
-        public void Create(TEntity entity)
+        public bool Create(TEntity entity)
         {
             _dbContext.Set<TEntity>().Add(entity);
-            _dbContext.SaveChanges();
+            int saved = _dbContext.SaveChanges();
+            return Convert.ToBoolean(saved);
         }
 
         public List<TEntity> Read()
@@ -25,16 +26,18 @@ namespace MVC_Frontend_and_REST_API.Data
             return _dbContext.Set<TEntity>().ToList();
         }
 
-        public void Update(TEntity entity)
+        public bool Update(TEntity entity)
         {
             _dbContext.Set<TEntity>().Update(entity);
-            _dbContext.SaveChanges();
+            int saved = _dbContext.SaveChanges();
+            return Convert.ToBoolean(saved);
         }
 
-        public void Delete(TEntity entity)
+        public bool Delete(TEntity entity)
         {
             _dbContext.Set<TEntity>().Remove(entity);
-            _dbContext.SaveChanges();
+            int saved = _dbContext.SaveChanges();
+            return Convert.ToBoolean(saved);
         }
     }
 
