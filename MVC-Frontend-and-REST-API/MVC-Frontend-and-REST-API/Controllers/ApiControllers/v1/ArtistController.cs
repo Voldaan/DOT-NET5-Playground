@@ -29,7 +29,7 @@ namespace MVC_Frontend_and_REST_API.Controllers.ApiControllers.v1
         }
 
         [HttpPost(ApiRoutes.Artist.ArtistsV1)]
-        public IActionResult Post(Artist model)
+        public IActionResult Post([FromBody] Artist model)
         {
             if (ModelState.IsValid)
             {
@@ -41,7 +41,7 @@ namespace MVC_Frontend_and_REST_API.Controllers.ApiControllers.v1
         }
 
         [HttpPut(ApiRoutes.Artist.ArtistsV1)]
-        public IActionResult Put(Artist model)
+        public IActionResult Put([FromBody] Artist model)
         {
             if (ModelState.IsValid && model.Id != Guid.Empty)
             {
@@ -52,7 +52,7 @@ namespace MVC_Frontend_and_REST_API.Controllers.ApiControllers.v1
             return BadRequest("Failed to update the artist");
         }
 
-        [HttpDelete(ApiRoutes.Artist.ArtistsV1)]
+        [HttpDelete(ApiRoutes.Artist.RemoveV1)]
         public IActionResult Delete(Guid id)
         {
             if(id != Guid.Empty)

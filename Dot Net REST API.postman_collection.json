@@ -1,0 +1,172 @@
+{
+	"info": {
+		"_postman_id": "c08290e6-1b87-4be6-a863-b87dae7fea84",
+		"name": "Dot Net REST API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Artists v1",
+			"item": [
+				{
+					"name": "Get all artists",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:44377/api/v1/artists",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44377",
+							"path": [
+								"api",
+								"v1",
+								"artists"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post artist",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Mark Holcomb\",\r\n    \"description\": \"Test test\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44377/api/v1/artists",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44377",
+							"path": [
+								"api",
+								"v1",
+								"artists"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Put artist",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"id\": \"d831a932-a376-450b-b26b-08da1fbd0181\",\r\n        \"name\": \"Mark Holcomb\",\r\n        \"description\": \"He in Periphery\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44377/api/v1/artists",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44377",
+							"path": [
+								"api",
+								"v1",
+								"artists"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete artist",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "Id",
+									"value": "b359328f-72a8-4a12-96c5-08da1fb2f280",
+									"type": "default",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "https://localhost:44377/api/v1/artists/d831a932-a376-450b-b26b-08da1fbd0181",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44377",
+							"path": [
+								"api",
+								"v1",
+								"artists",
+								"d831a932-a376-450b-b26b-08da1fbd0181"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
