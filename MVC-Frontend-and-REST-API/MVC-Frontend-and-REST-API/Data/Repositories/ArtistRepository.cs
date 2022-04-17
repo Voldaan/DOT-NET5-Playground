@@ -37,5 +37,13 @@ namespace MVC_Frontend_and_REST_API.Data.Repositories
             return _crudRepository.Delete(_crudRepository.Read().Where(x => x.Id == id).FirstOrDefault());
         }
 
+        public bool Search(string name)
+        {
+            var response = _context.Artists.Where(x => x.Name == name).FirstOrDefault();
+
+            if (response != null) return true;
+            return false;
+        }
+
     }
 }

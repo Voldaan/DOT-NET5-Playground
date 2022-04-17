@@ -38,5 +38,10 @@ namespace MVC_Frontend_and_REST_API.Logic
         {
             return _artistRepository.Delete(id);
         }
+
+        public bool SearchByName(Artist model)
+        {
+            return _artistRepository.Search(model.Name);
+        }
     }
 }

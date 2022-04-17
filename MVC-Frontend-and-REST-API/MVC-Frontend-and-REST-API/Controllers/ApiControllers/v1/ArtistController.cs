@@ -33,8 +33,17 @@ namespace MVC_Frontend_and_REST_API.Controllers.ApiControllers.v1
         {
             if (ModelState.IsValid)
             {
-                bool saved = _logic.Create(model);
-                if(saved) return Ok("Created new artist");
+                //Check if Artist exists
+                bool presentInDb = _logic.SearchByName(model);
+
+                if (!presentInDb)
+                {
+                    bool saved = _logic.Create(model);
+                    if (saved) return Ok("Created new artist");
+                    return BadRequest("Failed to create artist");
+                }
+
+                return BadRequest("Artist already exists");
             }
             
             return BadRequest("Failed to create artist");
