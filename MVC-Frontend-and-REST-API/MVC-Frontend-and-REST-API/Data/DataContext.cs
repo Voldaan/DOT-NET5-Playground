@@ -58,6 +58,7 @@ namespace MVC_Frontend_and_REST_API.Data
         }
 
         public DbSet<Artist> Artists { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
 
         //Get better info when something goes wrong add migrations
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MVC_Frontend_and_REST_API.Helperclasses;
+using MVC_Frontend_and_REST_API.Models.DataModels;
 using MVC_Frontend_and_REST_API.Models.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -16,11 +18,15 @@ namespace MVC_Frontend_and_REST_API.Data.Repositories
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly JwtSettings _jwtSettings;
+        private readonly TokenValidationParameters _tokenValidationParameters;
+        private readonly DataContext _dataContext;
 
-        public UserRepository(UserManager<IdentityUser> userManager, JwtSettings jwtSettings)
+        public UserRepository(UserManager<IdentityUser> userManager, JwtSettings jwtSettings, TokenValidationParameters tokenValidationParameters = null, DataContext dataContext = null)
         {
             _userManager = userManager;
             _jwtSettings = jwtSettings;
+            _tokenValidationParameters = tokenValidationParameters;
+            _dataContext = dataContext;
         }
 
         public async Task<bool> RegisterAsync(IdentityUser identityUser, string password)
@@ -46,6 +52,7 @@ namespace MVC_Frontend_and_REST_API.Data.Repositories
             if (await _userManager.CheckPasswordAsync(user, loginRequest.Password))
             {
                 string token = GenerateToken(user);
+                //string refreshToken
                 return new LoginResponseModel { LoggedIn = true, Token = token, Username = user.UserName };
             }
 
@@ -64,12 +71,105 @@ namespace MVC_Frontend_and_REST_API.Data.Repositories
                         new Claim(JwtRegisteredClaimNames.Email, user.Email),
                         new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                     }),
-                Expires = DateTime.UtcNow.AddHours(2),
+                Expires = DateTime.UtcNow.Add(_jwtSettings.TokenLifetime),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
 
             SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
+            var refreshToken = new RefreshToken
+            {
+                JwtId = token.Id,
+                UserId = user.Id,
+                CreationDate = DateTime.UtcNow,
+                //ExpirationDate = DateTime.UtcNow.AddMinutes(5)
+                ExpirationDate = DateTime.UtcNow.AddMonths(6)
+            };
+
+            //await _dataContext.RefreshTokens.AddAsync(refreshToken);
+            //save to db
+
+
             return tokenHandler.WriteToken(token);
+        }
+
+        public async Task<string> RefreshTokenAsync(RefreshTokenRequestModel refreshTokenRequest)
+        {
+            ClaimsPrincipal validatedToken = GetClaimsPrincipal(refreshTokenRequest.Token);
+            IdentityUser user1 = await Search(refreshTokenRequest.Email);
+            RefreshToken storedRefreshToken = await _dataContext.RefreshTokens.SingleOrDefaultAsync(x => x.UserId == user1.Id);
+
+            if (validatedToken == null)
+            {
+                //invalid token error
+            }
+
+            var expirationDateUnix = long.Parse(validatedToken.Claims.Single(x => x.Type == JwtRegisteredClaimNames.Exp).Value);
+            var expirationDateUtc = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddSeconds(expirationDateUnix);//.Subtract(_jwtSettings.TokenLifetime);
+
+            if(expirationDateUtc > DateTime.UtcNow)
+            {
+                //Token hasn't expired yet
+            }
+
+            var jti = validatedToken.Claims.Single(x => x.Type == JwtRegisteredClaimNames.Jti).Value;
+
+            //var storedRefreshToken = _dataContext.RefreshTokens.SingleOrDefault(x => x.Token == refreshToken); //Needs to be an async fucntion
+
+            if(storedRefreshToken == null)
+            {
+                //Refresh token doesn't exist error. Logout user
+            }
+
+            if (DateTime.UtcNow > storedRefreshToken.ExpirationDate)
+            {
+                //Refresh token has expired. Logout user
+            }
+
+            if (storedRefreshToken.Invalidated)
+            {
+                //Refresh token has been invalidated. Logout user
+            }
+
+            if (storedRefreshToken.Used)
+            {
+                //Refresh token has been used. Logout user
+            }
+
+            if (storedRefreshToken.JwtId != jti)
+            {
+                //Refresh token doesn't match Jwt
+            }
+
+            storedRefreshToken.Used = true;
+            _dataContext.RefreshTokens.Update(storedRefreshToken);
+            await _dataContext.SaveChangesAsync();
+
+            IdentityUser user = await _userManager.FindByIdAsync(validatedToken.Claims.Single(x => x.Type == "Id").Value);
+            return GenerateToken(user);
+        }
+
+        private ClaimsPrincipal GetClaimsPrincipal(string token)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+
+            try
+            {
+                var principal = tokenHandler.ValidateToken(token, _tokenValidationParameters, out var validatedToken);
+                if (!IsJwtWithValidSecurityAlgorithm(validatedToken))
+                {
+                    return null;
+                }
+                return principal;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        private bool IsJwtWithValidSecurityAlgorithm(SecurityToken validatedToken)
+        {
+            return (validatedToken is JwtSecurityToken jwtSecurityToken) && jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase);
         }
     }
 }

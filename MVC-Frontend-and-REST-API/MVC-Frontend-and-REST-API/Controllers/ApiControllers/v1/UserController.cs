@@ -48,5 +48,19 @@ namespace MVC_Frontend_and_REST_API.Controllers.ApiControllers.v1
 
             return BadRequest("Invalid information provided");
         }
+
+        [HttpPost(ApiRoutes.User.RefreshTokenV1)]
+        public async Task<IActionResult> RefreshTokenAsync([FromBody] RefreshTokenRequestModel refreshTokenRequest)
+        {
+            if (ModelState.IsValid)
+            {
+                await _logic.RefreshTokenAsync(refreshTokenRequest);
+                //LoginResponseModel response = await _logic.LoginAsync(loginRequest);
+                //if (response.LoggedIn) return Ok(response);
+                //return BadRequest("Failed to log in");
+            }
+
+            return BadRequest("Invalid information provided");
+        }
     }
 }

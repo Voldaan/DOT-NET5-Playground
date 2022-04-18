@@ -40,5 +40,12 @@ namespace MVC_Frontend_and_REST_API.Logic
         {
             return await _userRepository.LoginAsync(loginRequest);
         }
+
+        public async Task<bool> RefreshTokenAsync(RefreshTokenRequestModel refreshTokenRequest)
+        {
+            var test = await _userRepository.RefreshTokenAsync(refreshTokenRequest);
+
+            return true; //await _userRepository.LoginAsync(loginRequest);
+        }
     }
 }
