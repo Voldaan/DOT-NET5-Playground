@@ -14,6 +14,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.OpenApi.Models;
 using MVC_Frontend_and_REST_API.Logic;
 using MVC_Frontend_and_REST_API.Data.Repositories;
+using MVC_Frontend_and_REST_API.Helperclasses;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace MVC_Frontend_and_REST_API
 {
@@ -34,6 +38,29 @@ namespace MVC_Frontend_and_REST_API
             services.AddTransient<UserLogic>();
 
             services.AddControllersWithViews();
+
+            JwtSettings jwtSettings = new JwtSettings();
+            Configuration.Bind(nameof(jwtSettings), jwtSettings);
+            services.AddSingleton(jwtSettings);
+
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(x =>
+            {
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtSettings.Secret)),
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    RequireExpirationTime = false,
+                    ValidateLifetime = true
+                };
+            });
 
             services.AddDbContext<DataContext>(options =>
             {
@@ -78,6 +105,7 @@ namespace MVC_Frontend_and_REST_API
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {

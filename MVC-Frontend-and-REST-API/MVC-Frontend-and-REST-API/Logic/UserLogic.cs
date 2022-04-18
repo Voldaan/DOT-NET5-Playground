@@ -35,5 +35,10 @@ namespace MVC_Frontend_and_REST_API.Logic
             if (response != null) return true;
             return false;
         }
+
+        public async Task<LoginResponseModel> LoginAsync(LoginRequestModel loginRequest)
+        {
+            return await _userRepository.LoginAsync(loginRequest);
+        }
     }
 }

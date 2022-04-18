@@ -15,8 +15,8 @@ namespace MVC_Frontend_and_REST_API.Controllers.ApiControllers.v1
             _logic = logic;
         }
 
-        [HttpPost(ApiRoutes.User.UsersV1)]
-        public async Task<IActionResult> Create([FromBody] RegisterModel registerModel)
+        [HttpPost(ApiRoutes.User.RegisterV1)]
+        public async Task<IActionResult> RegisterAsync([FromBody] RegisterModel registerModel)
         {
             if (ModelState.IsValid)
             {
@@ -33,6 +33,19 @@ namespace MVC_Frontend_and_REST_API.Controllers.ApiControllers.v1
                 return BadRequest("User already exists");
             }
                 
+            return BadRequest("Invalid information provided");
+        }
+
+        [HttpPost(ApiRoutes.User.LoginV1)]
+        public async Task<IActionResult> LoginAsync([FromBody] LoginRequestModel loginRequest)
+        {
+            if (ModelState.IsValid)
+            {
+                LoginResponseModel response = await _logic.LoginAsync(loginRequest);
+                if (response.LoggedIn) return Ok(response);
+                return BadRequest("Failed to log in");
+            }
+
             return BadRequest("Invalid information provided");
         }
     }

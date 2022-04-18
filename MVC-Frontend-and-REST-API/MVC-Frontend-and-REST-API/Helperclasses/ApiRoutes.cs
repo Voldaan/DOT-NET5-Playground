@@ -21,7 +21,8 @@ namespace MVC_Frontend_and_REST_API.Helperclasses
         {
             const string prefixV1 = _v1 + "/users";
 
-            public const string UsersV1 = prefixV1;
+            public const string RegisterV1 = prefixV1 + "/register";
+            public const string LoginV1 = prefixV1 + "/login";
         }
     }
 }
