@@ -1,14 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MVC_Frontend_and_REST_API.Helperclasses;
 using MVC_Frontend_and_REST_API.Logic;
 using MVC_Frontend_and_REST_API.Models.DataModels;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MVC_Frontend_and_REST_API.Controllers.ApiControllers.v1
 {
+    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]     //Authentication required for entire controller
     public class ArtistController : Controller
     {
         private readonly ArtistLogic _logic;
@@ -29,6 +29,7 @@ namespace MVC_Frontend_and_REST_API.Controllers.ApiControllers.v1
         }
 
         [HttpPost(ApiRoutes.Artist.ArtistsV1)]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public IActionResult Post([FromBody] Artist model)
         {
             if (ModelState.IsValid)
@@ -50,6 +51,7 @@ namespace MVC_Frontend_and_REST_API.Controllers.ApiControllers.v1
         }
 
         [HttpPut(ApiRoutes.Artist.ArtistsV1)]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public IActionResult Put([FromBody] Artist model)
         {
             if (ModelState.IsValid && model.Id != Guid.Empty)
@@ -62,6 +64,7 @@ namespace MVC_Frontend_and_REST_API.Controllers.ApiControllers.v1
         }
 
         [HttpDelete(ApiRoutes.Artist.RemoveV1)]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public IActionResult Delete(Guid id)
         {
             if(id != Guid.Empty)
