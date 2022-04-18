@@ -16,5 +16,12 @@ namespace MVC_Frontend_and_REST_API.Helperclasses
             public const string ArtistsV1 = prefixV1;
             public const string RemoveV1 = prefixV1 + "/{id}";
         }
+
+        public static class User
+        {
+            const string prefixV1 = _v1 + "/users";
+
+            public const string UsersV1 = prefixV1;
+        }
     }
 }

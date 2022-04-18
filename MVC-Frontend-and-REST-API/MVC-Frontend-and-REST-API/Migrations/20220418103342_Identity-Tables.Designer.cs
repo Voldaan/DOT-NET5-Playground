@@ -4,14 +4,16 @@ using MVC_Frontend_and_REST_API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MVC_Frontend_and_REST_API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220418103342_Identity-Tables")]
+    partial class IdentityTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,19 +44,19 @@ namespace MVC_Frontend_and_REST_API.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("96b65129-64ac-4848-9858-0d0724286540"),
+                            Id = new Guid("e99dc311-0c6e-40f0-b97d-755135ecfc4a"),
                             Description = "Franck Hueso, better known by his stage name Carpenter Brut, is a French darksynth artist from Poitiers, France. Carpenter Brut claims his relative anonymity is a deliberate artistic choice in order to place more importance on the music itself, rather than the identity of the musician behind it. He started writing music as Carpenter Brut with the intention of mixing sounds from horror films, metal, rock, and electronic music. In live performances Carpenter Brut is joined on stage by guitarist Adrien Grousset and drummer Florent Marcadet, both from the French metal band Hacride and in 2016 Brut toured the United States with the Swedish heavy metal band Ghost.",
                             Name = "Carpenter Brut"
                         },
                         new
                         {
-                            Id = new Guid("4624393b-e929-4304-9a96-2223c1066f39"),
+                            Id = new Guid("ae2f32b7-68a2-4da9-a53b-f9ed8a604d1c"),
                             Description = "Three Days Grace is a Canadian rock band formed in Norwood, Ontario in 1997. The band's original iteration was called \"Groundswell\" and played in various local Norwood back-yard parties and area establishments from 1993 to 1996. Based in Toronto, the band's original line-up consisted of guitarist and lead vocalist Adam Gontier, drummer and backing vocalist Neil Sanderson, and bassist Brad Walst. In 2003, Barry Stock was recruited as the band's lead guitarist, making them a four - member band.In 2013, Gontier left the band and was replaced by My Darkest Days' vocalist Matt Walst, who is also the younger brother of Brad Walst.",
                             Name = "Three Days Grace"
                         },
                         new
                         {
-                            Id = new Guid("e161b950-d563-4958-b9fb-f8b4af3d0e97"),
+                            Id = new Guid("6093964a-d53f-46fe-9d20-aeb9ca3f2ff4"),
                             Description = "If These Trees Could Talk is an instrumental post-rock band from Akron, Ohio. The band self-released their self-titled debut EP in 2006. Independent record label The Mylene Sheath re-released the EP on vinyl in 2007, and went on to release the band's debut studio album, Above the Earth, Below the Sky, on vinyl also, in 2009. The band self-released their second album Red Forest in March 2012, whilst the album's vinyl release went through Science of Silence Records. They went on to follow up the release of \"Red Forest\" with a self-promoted tour throughout Europe in April 2012. The band released its third album, The Bones of a Dying World, in June, 2016 on Metal Blade Records.",
                             Name = "If These Trees Could Talk"
                         });
@@ -85,22 +87,6 @@ namespace MVC_Frontend_and_REST_API.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "7409720a-4f3c-47ad-94b2-b04f95c9b14a",
-                            ConcurrencyStamp = "dece547e-1025-4547-9a47-49ae3b2360dc",
-                            Name = "Admin",
-                            NormalizedName = "admin"
-                        },
-                        new
-                        {
-                            Id = "97996e2b-acaa-4e1e-9b62-79995975ac25",
-                            ConcurrencyStamp = "cf327917-afa4-4eb9-b4e1-8a49101fd765",
-                            Name = "User",
-                            NormalizedName = "user"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

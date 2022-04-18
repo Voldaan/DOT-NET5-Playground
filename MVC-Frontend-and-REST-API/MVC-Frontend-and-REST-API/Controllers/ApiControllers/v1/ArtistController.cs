@@ -46,7 +46,7 @@ namespace MVC_Frontend_and_REST_API.Controllers.ApiControllers.v1
                 return BadRequest("Artist already exists");
             }
             
-            return BadRequest("Failed to create artist");
+            return BadRequest("Invalid information provided");
         }
 
         [HttpPut(ApiRoutes.Artist.ArtistsV1)]

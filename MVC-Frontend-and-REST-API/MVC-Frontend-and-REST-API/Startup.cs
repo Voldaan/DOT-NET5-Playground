@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.OpenApi.Models;
 using MVC_Frontend_and_REST_API.Logic;
+using MVC_Frontend_and_REST_API.Data.Repositories;
 
 namespace MVC_Frontend_and_REST_API
 {
@@ -29,6 +30,8 @@ namespace MVC_Frontend_and_REST_API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<ArtistLogic>();
+            services.AddTransient<UserRepository>();
+            services.AddTransient<UserLogic>();
 
             services.AddControllersWithViews();
 
@@ -37,14 +40,14 @@ namespace MVC_Frontend_and_REST_API
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
 
-            services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<DataContext>();
+            services.AddDefaultIdentity<IdentityUser>().AddRoles<IdentityRole>().AddEntityFrameworkStores<DataContext>();
 
-            //services.AddIdentityCore<IdentityUser>(options =>
-            //{
-            //    options.Password.RequireUppercase = false;
-            //    options.Password.RequireNonAlphanumeric = false;
-            //    options.Password.RequireDigit = false;
-            //});
+            services.AddIdentityCore<IdentityUser>(options =>
+            {
+                options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireDigit = false;
+            });
 
             services.AddSwaggerGen(c =>
             {
