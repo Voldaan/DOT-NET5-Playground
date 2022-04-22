@@ -11,7 +11,7 @@ namespace MVC_Frontend_and_REST_API.Models.DataModels
     public class RefreshToken
     {
         [Key]
-        public string Token { get; set; }
+        public Guid Token { get; set; }
         public string JwtId { get; set; }
         public DateTime CreationDate { get; set; }
         public DateTime ExpirationDate { get; set; }

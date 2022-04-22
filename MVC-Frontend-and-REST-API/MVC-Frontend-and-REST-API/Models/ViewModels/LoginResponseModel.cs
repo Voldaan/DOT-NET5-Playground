@@ -8,6 +8,7 @@ namespace MVC_Frontend_and_REST_API.Models.ViewModels
     public class LoginResponseModel
     {
         public string Token { get; set; }
+        public string RefreshToken { get; set; }
         public string Username { get; set; }
         public bool LoggedIn { get; set; }
     }

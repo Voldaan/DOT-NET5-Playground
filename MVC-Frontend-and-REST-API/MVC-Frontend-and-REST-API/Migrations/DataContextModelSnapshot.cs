@@ -42,19 +42,19 @@ namespace MVC_Frontend_and_REST_API.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("6a69b145-5cf4-4dc5-875f-5b092f7724cc"),
+                            Id = new Guid("afdb4890-08ae-4620-8cf7-65778255cac0"),
                             Description = "Franck Hueso, better known by his stage name Carpenter Brut, is a French darksynth artist from Poitiers, France. Carpenter Brut claims his relative anonymity is a deliberate artistic choice in order to place more importance on the music itself, rather than the identity of the musician behind it. He started writing music as Carpenter Brut with the intention of mixing sounds from horror films, metal, rock, and electronic music. In live performances Carpenter Brut is joined on stage by guitarist Adrien Grousset and drummer Florent Marcadet, both from the French metal band Hacride and in 2016 Brut toured the United States with the Swedish heavy metal band Ghost.",
                             Name = "Carpenter Brut"
                         },
                         new
                         {
-                            Id = new Guid("986bf532-f3fd-4a69-ba7d-ac872c40dd8f"),
+                            Id = new Guid("fb09be72-d69d-4f22-8812-6e334177c29c"),
                             Description = "Three Days Grace is a Canadian rock band formed in Norwood, Ontario in 1997. The band's original iteration was called \"Groundswell\" and played in various local Norwood back-yard parties and area establishments from 1993 to 1996. Based in Toronto, the band's original line-up consisted of guitarist and lead vocalist Adam Gontier, drummer and backing vocalist Neil Sanderson, and bassist Brad Walst. In 2003, Barry Stock was recruited as the band's lead guitarist, making them a four - member band.In 2013, Gontier left the band and was replaced by My Darkest Days' vocalist Matt Walst, who is also the younger brother of Brad Walst.",
                             Name = "Three Days Grace"
                         },
                         new
                         {
-                            Id = new Guid("9476140b-7777-41c9-8a85-91d7f864aab9"),
+                            Id = new Guid("6fef5695-c273-42d7-a117-daf3907cb2ad"),
                             Description = "If These Trees Could Talk is an instrumental post-rock band from Akron, Ohio. The band self-released their self-titled debut EP in 2006. Independent record label The Mylene Sheath re-released the EP on vinyl in 2007, and went on to release the band's debut studio album, Above the Earth, Below the Sky, on vinyl also, in 2009. The band self-released their second album Red Forest in March 2012, whilst the album's vinyl release went through Science of Silence Records. They went on to follow up the release of \"Red Forest\" with a self-promoted tour throughout Europe in April 2012. The band released its third album, The Bones of a Dying World, in June, 2016 on Metal Blade Records.",
                             Name = "If These Trees Could Talk"
                         });
@@ -62,8 +62,9 @@ namespace MVC_Frontend_and_REST_API.Migrations
 
             modelBuilder.Entity("MVC_Frontend_and_REST_API.Models.DataModels.RefreshToken", b =>
                 {
-                    b.Property<string>("Token")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("Token")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
@@ -119,15 +120,15 @@ namespace MVC_Frontend_and_REST_API.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "c0636851-3cbe-4c9b-a06b-e887eded2c9e",
-                            ConcurrencyStamp = "870a73af-c6f8-4dcd-8f4c-48461de7aa7d",
+                            Id = "3b9f8bec-9ddb-4be7-816f-29d90dee2253",
+                            ConcurrencyStamp = "9e035738-0130-4ae1-bfa7-3e5345ac9291",
                             Name = "Admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "b6416a7b-41a8-4a94-a39d-acdaeca3b4db",
-                            ConcurrencyStamp = "e4111ec4-c605-4f8b-853e-38b59fb3fd33",
+                            Id = "ff07633b-595c-4770-ac52-a6726ebded82",
+                            ConcurrencyStamp = "b17d0631-aa70-46bf-bf43-8a2891d5e1ad",
                             Name = "User",
                             NormalizedName = "user"
                         });

@@ -54,10 +54,9 @@ namespace MVC_Frontend_and_REST_API.Controllers.ApiControllers.v1
         {
             if (ModelState.IsValid)
             {
-                await _logic.RefreshTokenAsync(refreshTokenRequest);
-                //LoginResponseModel response = await _logic.LoginAsync(loginRequest);
-                //if (response.LoggedIn) return Ok(response);
-                //return BadRequest("Failed to log in");
+                var response = await _logic.RefreshTokenAsync(refreshTokenRequest);
+
+                return Ok(response);
             }
 
             return BadRequest("Invalid information provided");

@@ -47,22 +47,23 @@ namespace MVC_Frontend_and_REST_API.Data.Repositories
         public async Task<LoginResponseModel> LoginAsync(LoginRequestModel loginRequest)
         {
             IdentityUser user = await _userManager.FindByEmailAsync(loginRequest.Email);
-            //LoginModel login = new LoginModel();
 
             if (await _userManager.CheckPasswordAsync(user, loginRequest.Password))
             {
-                string token = GenerateToken(user);
-                //string refreshToken
-                return new LoginResponseModel { LoggedIn = true, Token = token, Username = user.UserName };
+                TokenGenerationResult token = await GenerateTokenAsync(user);
+                return new LoginResponseModel { LoggedIn = true, Token = token.Token, RefreshToken = token.RefreshToken.Token.ToString(), Username = user.UserName };
             }
 
             return new LoginResponseModel { LoggedIn = false };
         }
 
-        public string GenerateToken(IdentityUser user)
+        public async Task<TokenGenerationResult> GenerateTokenAsync(IdentityUser user)
         {
             JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
             byte[] key = Encoding.ASCII.GetBytes(_jwtSettings.Secret);
+
+            var expdate = DateTime.UtcNow.Add(_jwtSettings.TokenLifetime);
+
             SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[]
@@ -76,68 +77,83 @@ namespace MVC_Frontend_and_REST_API.Data.Repositories
             };
 
             SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
-            var refreshToken = new RefreshToken
+
+            RefreshToken refreshToken = new RefreshToken
             {
                 JwtId = token.Id,
                 UserId = user.Id,
                 CreationDate = DateTime.UtcNow,
-                //ExpirationDate = DateTime.UtcNow.AddMinutes(5)
                 ExpirationDate = DateTime.UtcNow.AddMonths(6)
             };
 
-            //await _dataContext.RefreshTokens.AddAsync(refreshToken);
-            //save to db
+            await _dataContext.RefreshTokens.AddAsync(refreshToken);
+            _dataContext.SaveChanges();
 
-
-            return tokenHandler.WriteToken(token);
+            return new TokenGenerationResult { Token = tokenHandler.WriteToken(token), RefreshToken = refreshToken };
         }
 
-        public async Task<string> RefreshTokenAsync(RefreshTokenRequestModel refreshTokenRequest)
+        public async Task<RefreshTokenResponseModel> RefreshTokenAsync(RefreshTokenRequestModel refreshTokenRequest)
         {
             ClaimsPrincipal validatedToken = GetClaimsPrincipal(refreshTokenRequest.Token);
-            IdentityUser user1 = await Search(refreshTokenRequest.Email);
-            RefreshToken storedRefreshToken = await _dataContext.RefreshTokens.SingleOrDefaultAsync(x => x.UserId == user1.Id);
+
+            var invalidTokenResponse = new RefreshTokenResponseModel
+            {
+                Message = "Invalid token",
+                TerminateSession = true
+            };
 
             if (validatedToken == null)
             {
                 //invalid token error
+                return invalidTokenResponse;
+                
             }
 
             var expirationDateUnix = long.Parse(validatedToken.Claims.Single(x => x.Type == JwtRegisteredClaimNames.Exp).Value);
-            var expirationDateUtc = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddSeconds(expirationDateUnix);//.Subtract(_jwtSettings.TokenLifetime);
+            var expirationDateUtc = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddSeconds(expirationDateUnix);
 
             if(expirationDateUtc > DateTime.UtcNow)
             {
                 //Token hasn't expired yet
+                return new RefreshTokenResponseModel
+                {
+                    Message = "Token hasn't expired yet",
+                    TerminateSession = false
+                };
             }
 
-            var jti = validatedToken.Claims.Single(x => x.Type == JwtRegisteredClaimNames.Jti).Value;
+            string jti = validatedToken.Claims.Single(x => x.Type == JwtRegisteredClaimNames.Jti).Value;
 
-            //var storedRefreshToken = _dataContext.RefreshTokens.SingleOrDefault(x => x.Token == refreshToken); //Needs to be an async fucntion
+            RefreshToken storedRefreshToken = await _dataContext.RefreshTokens.SingleOrDefaultAsync(x => x.Token == new Guid(refreshTokenRequest.RefreshToken));
 
-            if(storedRefreshToken == null)
+            if (storedRefreshToken == null)
             {
                 //Refresh token doesn't exist error. Logout user
+                return invalidTokenResponse;
             }
 
             if (DateTime.UtcNow > storedRefreshToken.ExpirationDate)
             {
                 //Refresh token has expired. Logout user
+                return invalidTokenResponse;
             }
 
             if (storedRefreshToken.Invalidated)
             {
                 //Refresh token has been invalidated. Logout user
+                return invalidTokenResponse;
             }
 
             if (storedRefreshToken.Used)
             {
                 //Refresh token has been used. Logout user
+                return invalidTokenResponse;
             }
 
             if (storedRefreshToken.JwtId != jti)
             {
                 //Refresh token doesn't match Jwt
+                return invalidTokenResponse;
             }
 
             storedRefreshToken.Used = true;
@@ -145,7 +161,14 @@ namespace MVC_Frontend_and_REST_API.Data.Repositories
             await _dataContext.SaveChangesAsync();
 
             IdentityUser user = await _userManager.FindByIdAsync(validatedToken.Claims.Single(x => x.Type == "Id").Value);
-            return GenerateToken(user);
+            TokenGenerationResult token = await GenerateTokenAsync(user);
+
+            return new RefreshTokenResponseModel
+            {
+                Token = token.Token,
+                RefreshToken = token.RefreshToken.Token.ToString(),
+                TerminateSession = false
+            };
         }
 
         private ClaimsPrincipal GetClaimsPrincipal(string token)
