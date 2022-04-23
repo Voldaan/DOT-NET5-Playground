@@ -1,0 +1,364 @@
+{
+	"info": {
+		"_postman_id": "c08290e6-1b87-4be6-a863-b87dae7fea84",
+		"name": "Dot Net5 REST API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Artists v1",
+			"item": [
+				{
+					"name": "Get all artists",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:44377/api/v1/artists",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44377",
+							"path": [
+								"api",
+								"v1",
+								"artists"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post artist",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6ImJhMDNlMzY2LTg1YzQtNDBjNi1hNjIyLWExNTdjM2RmOTBkNCIsImVtYWlsIjoidXNlckBleGFtcGxlLmNvbSIsImp0aSI6IjQ3YjgyN2I2LWE5OGUtNGU5My05MzJlLWNjNmJmM2E2NmMxNSIsIm5iZiI6MTY1MDI4ODg0OSwiZXhwIjoxNjUwMjk2MDQ5LCJpYXQiOjE2NTAyODg4NDl9.2pL9vSKwX-8hUwexYmxX_Q7AE8tYbWLojGg9x5BdJNY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Mark Holcomb\",\r\n    \"description\": \"Test test\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44377/api/v1/artists",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44377",
+							"path": [
+								"api",
+								"v1",
+								"artists"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Put artist",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6ImJhMDNlMzY2LTg1YzQtNDBjNi1hNjIyLWExNTdjM2RmOTBkNCIsImVtYWlsIjoidXNlckBleGFtcGxlLmNvbSIsImp0aSI6IjQ3YjgyN2I2LWE5OGUtNGU5My05MzJlLWNjNmJmM2E2NmMxNSIsIm5iZiI6MTY1MDI4ODg0OSwiZXhwIjoxNjUwMjk2MDQ5LCJpYXQiOjE2NTAyODg4NDl9.2pL9vSKwX-8hUwexYmxX_Q7AE8tYbWLojGg9x5BdJNY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"id\": \"d831a932-a376-450b-b26b-08da1fbd0181\",\r\n        \"name\": \"Mark Holcomb\",\r\n        \"description\": \"He in Periphery\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44377/api/v1/artists",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44377",
+							"path": [
+								"api",
+								"v1",
+								"artists"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete artist",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6ImJhMDNlMzY2LTg1YzQtNDBjNi1hNjIyLWExNTdjM2RmOTBkNCIsImVtYWlsIjoidXNlckBleGFtcGxlLmNvbSIsImp0aSI6IjQ3YjgyN2I2LWE5OGUtNGU5My05MzJlLWNjNmJmM2E2NmMxNSIsIm5iZiI6MTY1MDI4ODg0OSwiZXhwIjoxNjUwMjk2MDQ5LCJpYXQiOjE2NTAyODg4NDl9.2pL9vSKwX-8hUwexYmxX_Q7AE8tYbWLojGg9x5BdJNY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "Id",
+									"value": "b359328f-72a8-4a12-96c5-08da1fb2f280",
+									"type": "default",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "https://localhost:44377/api/v1/artists/d831a932-a376-450b-b26b-08da1fbd0181",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44377",
+							"path": [
+								"api",
+								"v1",
+								"artists",
+								"d831a932-a376-450b-b26b-08da1fbd0181"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users v1",
+			"item": [
+				{
+					"name": "Register user",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"user@example.com\",\r\n  \"userName\": \"strinnng\",\r\n  \"password\": \"strinnng\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44377/api/v1/users/register",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44377",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login user",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"user@example.com\",\r\n  \"password\": \"strinnng\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44377/api/v1/users/login",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44377",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh token",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6ImQ2YTAzMmNiLTU3NzQtNGY3ZS1hYjU4LTVhZjc3Y2UzYWYwMCIsImVtYWlsIjoidXNlckBleGFtcGxlLmNvbSIsImp0aSI6IjllNDVhYzMxLTlkODMtNDAwYi05YmFmLTNlYzk5ZWI5OWM1MiIsIm5iZiI6MTY1MDcwMDYzNCwiZXhwIjoxNjUwNzAwOTM0LCJpYXQiOjE2NTA3MDA2MzR9.zxT8BmhtlEpLARh_sN3oNAsOQJYFLXxmOWvb6_zW3WA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjlkMzkwZTRmLTMwZmItNDMyNi05MWU4LTJmYTFiMWU0NjczZiIsImVtYWlsIjoidXNlckBleGFtcGxlLmNvbSIsImp0aSI6ImVhOGYyYmE5LTc1YzUtNDBhZi1iOWM1LTBkM2NlNDkwZThmNSIsIm5iZiI6MTY1MDY0MTE3MSwiZXhwIjoxNjUwNjQxMjE2LCJpYXQiOjE2NTA2NDExNzF9.37bKCVr2GdS2XBJpFWUPpzwQo7_eJyvTJtuWdzKBnlQ\",\r\n    \"refreshToken\": \"2cedf41b-0f1d-4d8f-0f68-08da24746e73\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44377/api/v1/users/refresh",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44377",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"refresh"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get role",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6ImQ2YTAzMmNiLTU3NzQtNGY3ZS1hYjU4LTVhZjc3Y2UzYWYwMCIsImVtYWlsIjoidXNlckBleGFtcGxlLmNvbSIsImp0aSI6IjllNDVhYzMxLTlkODMtNDAwYi05YmFmLTNlYzk5ZWI5OWM1MiIsIm5iZiI6MTY1MDcwMDYzNCwiZXhwIjoxNjUwNzAwOTM0LCJpYXQiOjE2NTA3MDA2MzR9.zxT8BmhtlEpLARh_sN3oNAsOQJYFLXxmOWvb6_zW3WA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:44377/api/v1/users/role",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44377",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"role"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
