@@ -261,7 +261,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"email\": \"user@example.com\",\r\n  \"password\": \"string\"\r\n}",
+							"raw": "{\r\n  \"email\": \"user@example.com\",\r\n  \"password\": \"strinnng\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -280,6 +280,79 @@
 								"v1",
 								"users",
 								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh token",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6ImQ2YTAzMmNiLTU3NzQtNGY3ZS1hYjU4LTVhZjc3Y2UzYWYwMCIsImVtYWlsIjoidXNlckBleGFtcGxlLmNvbSIsImp0aSI6IjllNDVhYzMxLTlkODMtNDAwYi05YmFmLTNlYzk5ZWI5OWM1MiIsIm5iZiI6MTY1MDcwMDYzNCwiZXhwIjoxNjUwNzAwOTM0LCJpYXQiOjE2NTA3MDA2MzR9.zxT8BmhtlEpLARh_sN3oNAsOQJYFLXxmOWvb6_zW3WA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjlkMzkwZTRmLTMwZmItNDMyNi05MWU4LTJmYTFiMWU0NjczZiIsImVtYWlsIjoidXNlckBleGFtcGxlLmNvbSIsImp0aSI6ImVhOGYyYmE5LTc1YzUtNDBhZi1iOWM1LTBkM2NlNDkwZThmNSIsIm5iZiI6MTY1MDY0MTE3MSwiZXhwIjoxNjUwNjQxMjE2LCJpYXQiOjE2NTA2NDExNzF9.37bKCVr2GdS2XBJpFWUPpzwQo7_eJyvTJtuWdzKBnlQ\",\r\n    \"refreshToken\": \"2cedf41b-0f1d-4d8f-0f68-08da24746e73\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44377/api/v1/users/refresh",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44377",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"refresh"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get role",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6ImQ2YTAzMmNiLTU3NzQtNGY3ZS1hYjU4LTVhZjc3Y2UzYWYwMCIsImVtYWlsIjoidXNlckBleGFtcGxlLmNvbSIsImp0aSI6IjllNDVhYzMxLTlkODMtNDAwYi05YmFmLTNlYzk5ZWI5OWM1MiIsIm5iZiI6MTY1MDcwMDYzNCwiZXhwIjoxNjUwNzAwOTM0LCJpYXQiOjE2NTA3MDA2MzR9.zxT8BmhtlEpLARh_sN3oNAsOQJYFLXxmOWvb6_zW3WA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:44377/api/v1/users/role",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44377",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"role"
 							]
 						}
 					},

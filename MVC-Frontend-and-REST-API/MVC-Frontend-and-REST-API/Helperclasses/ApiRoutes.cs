@@ -24,6 +24,7 @@ namespace MVC_Frontend_and_REST_API.Helperclasses
             public const string RegisterV1 = prefixV1 + "/register";
             public const string LoginV1 = prefixV1 + "/login";
             public const string RefreshTokenV1 = prefixV1 + "/refresh";
+            public const string GetRole = prefixV1 + "/role";
         }
     }
 }

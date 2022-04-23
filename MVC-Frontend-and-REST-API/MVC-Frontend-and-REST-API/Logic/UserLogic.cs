@@ -30,7 +30,7 @@ namespace MVC_Frontend_and_REST_API.Logic
 
         public async Task<bool> CheckIfUserExists(string email)
         {
-            IdentityUser response = await _userRepository.Search(email);
+            IdentityUser response = await _userRepository.SearchAsync(email);
 
             if (response != null) return true;
             return false;
@@ -44,6 +44,21 @@ namespace MVC_Frontend_and_REST_API.Logic
         public async Task<RefreshTokenResponseModel> RefreshTokenAsync(RefreshTokenRequestModel refreshTokenRequest)
         {
             return await _userRepository.RefreshTokenAsync(refreshTokenRequest);
+        }
+
+        public async Task<string> GetRoleAsync(string id)
+        {
+            IList<string> roles = await _userRepository.SearchByIdAsync(id);
+
+            if (roles.Count >= 1) return roles[0];
+            else {
+                //Create role for the user
+                string role = await _userRepository.AddRoleToUserAsync(id);
+
+                if(role != String.Empty) return role;
+            }
+
+            return string.Empty;
         }
     }
 }

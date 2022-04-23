@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MVC_Frontend_and_REST_API.Helperclasses;
 using MVC_Frontend_and_REST_API.Logic;
 using MVC_Frontend_and_REST_API.Models.ViewModels;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace MVC_Frontend_and_REST_API.Controllers.ApiControllers.v1
@@ -50,6 +53,7 @@ namespace MVC_Frontend_and_REST_API.Controllers.ApiControllers.v1
         }
 
         [HttpPost(ApiRoutes.User.RefreshTokenV1)]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> RefreshTokenAsync([FromBody] RefreshTokenRequestModel refreshTokenRequest)
         {
             if (ModelState.IsValid)
@@ -60,6 +64,22 @@ namespace MVC_Frontend_and_REST_API.Controllers.ApiControllers.v1
             }
 
             return BadRequest("Invalid information provided");
+        }
+
+        [HttpPost(ApiRoutes.User.GetRole)]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<IActionResult> GetRoleAsync()
+        {
+            string userId = HttpContext.GetUserID();
+
+            if (userId != string.Empty)
+            {
+                string role = await _logic.GetRoleAsync(userId);
+
+                if(role != string.Empty) return Ok(role);
+            }
+
+            return BadRequest("User has no role"); ;
         }
     }
 }

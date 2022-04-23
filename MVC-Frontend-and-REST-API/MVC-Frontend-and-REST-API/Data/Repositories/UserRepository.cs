@@ -39,9 +39,25 @@ namespace MVC_Frontend_and_REST_API.Data.Repositories
             return true;
         }
 
-        public async Task<IdentityUser> Search(string email)
+        public async Task<IdentityUser> SearchAsync(string email)
         {
             return await _userManager.FindByEmailAsync(email);
+        }
+
+        public async Task<IList<string>> SearchByIdAsync(string id)
+        {
+            IdentityUser user = await _userManager.FindByIdAsync(id);
+            return await _userManager.GetRolesAsync(user);
+        }
+
+        public async Task<string> AddRoleToUserAsync(string id)
+        {
+            string role = "User";
+            IdentityUser user = await _userManager.FindByIdAsync(id);
+            IdentityResult roleResult = await _userManager.AddToRoleAsync(user, role);
+
+            if (!roleResult.Succeeded) return String.Empty;
+            return role;
         }
 
         public async Task<LoginResponseModel> LoginAsync(LoginRequestModel loginRequest)
